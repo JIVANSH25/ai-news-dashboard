@@ -10,7 +10,10 @@
 <div id="news"></div>
 
 <script>
-fetch("http://127.0.0.1:8000/news")
+const BASE_URL = "https://ai-news-dashboard-3.onrender.com";
+
+// Fetch news
+fetch(`${BASE_URL}/news`)
 .then(res => res.json())
 .then(data => {
     let container = document.getElementById("news");
@@ -35,8 +38,9 @@ fetch("http://127.0.0.1:8000/news")
     });
 });
 
+// Favorite function
 function favorite(title, link){
-    fetch("http://127.0.0.1:8000/favorite", {
+    fetch(`${BASE_URL}/favorite`, {
         method: "POST",
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify({title, link})
@@ -44,8 +48,9 @@ function favorite(title, link){
     .then(() => alert("Added to favorites ✅"));
 }
 
+// Broadcast function
 function broadcast(title){
-    fetch("http://127.0.0.1:8000/broadcast", {
+    fetch(`${BASE_URL}/broadcast`, {
         method: "POST",
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify({title})
@@ -56,4 +61,4 @@ function broadcast(title){
 </script>
 
 </body>
-</html> 
+</html>

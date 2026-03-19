@@ -1,8 +1,8 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from news_fetcher import fetch_news
-from database import SessionLocal, Favorite
-from ai import generate_caption
+from backend.news_fetcher import fetch_news
+from backend.database import SessionLocal, Favorite
+from backend.ai import generate_caption
 
 app = FastAPI()
 

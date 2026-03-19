@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>AI News Dashboard</title>
+</head>
+<body>
+
+<h1>🧠 AI News Dashboard</h1>
+
+<div id="news"></div>
+
+<script>
+fetch("http://127.0.0.1:8000/news")
+.then(res => res.json())
+.then(data => {
+    let container = document.getElementById("news");
+
+    data.forEach(item => {
+        let div = document.createElement("div");
+
+        div.style.border = "1px solid black";
+        div.style.margin = "10px";
+        div.style.padding = "10px";
+
+        div.innerHTML = `
+            <h3>${item.title}</h3>
+            <p>${item.summary}</p>
+            <a href="${item.link}" target="_blank">Read more</a><br><br>
+
+            <button onclick="favorite('${item.title}', '${item.link}')">⭐ Favorite</button>
+            <button onclick="broadcast('${item.title}')">📣 Broadcast</button>
+        `;
+
+        container.appendChild(div);
+    });
+});
+
+function favorite(title, link){
+    fetch("http://127.0.0.1:8000/favorite", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({title, link})
+    })
+    .then(() => alert("Added to favorites ✅"));
+}
+
+function broadcast(title){
+    fetch("http://127.0.0.1:8000/broadcast", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({title})
+    })
+    .then(res => res.json())
+    .then(data => alert(data.caption));
+}
+</script>
+
+</body>
+</html> 
